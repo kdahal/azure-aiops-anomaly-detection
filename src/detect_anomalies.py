@@ -1,16 +1,24 @@
 import requests
 import os
+import random
 from datetime import datetime, timedelta
 
-def create_payload(num_points=100, base_value=75, granularity="PT1M"):
+def create_payload_with_anomalies(num_points=100, base_value=75, anomaly_prob=0.05, granularity="PT1M"):
     """
-    Creates a sample time-series payload for anomaly detection.
-    Simulates metrics with minor variations (replace with real Azure Monitor data).
+    Enhanced payload creator: Simulates normal patterns with random anomalies (spikes/drops).
+    Mimics Azure VM CPU/memory fluctuations for offline testing.
     """
     series = []
     for i in range(num_points):
         timestamp = (datetime.now() - timedelta(minutes=i)).isoformat()
-        value = base_value + (i % 5)  # Simple pattern with deviations
+        # Base seasonal pattern: slight rise/fall
+        value = base_value + random.uniform(-5, 5) + (i % 10)  # Cyclic every 10 mins
+        
+        # Inject anomaly ~5% of time
+        if random.random() < anomaly_prob:
+            deviation = random.choice([random.uniform(20, 40), random.uniform(-20, -10)])  # Spike or drop
+            value += deviation
+        
         series.append({"timestamp": timestamp, "value": value})
     return {
         "series": series,
