@@ -1,8 +1,9 @@
 import unittest
 import os
+import random  # For seeding in anomaly test
 from unittest.mock import patch, Mock
 
-from src.detect_anomalies import create_payload, detect_via_api
+from src.detect_anomalies import create_payload, detect_via_api, create_payload_with_anomalies
 
 class TestAnomalyDetection(unittest.TestCase):
     def test_series_payload(self):
@@ -54,5 +55,14 @@ class TestAnomalyDetection(unittest.TestCase):
         with self.assertRaises(ValueError):
             detect_via_api(payload, '', '')  # Directly pass None-like values
 
+    def test_payload_with_anomalies(self):
+        # Seed for reproducible test (ensures anomalies)
+        random.seed(42)
+        payload = create_payload_with_anomalies(20, anomaly_prob=0.2)
+        values = [p['value'] for p in payload['series']]
+        self.assertEqual(len(values), 20)
+        extremes = [v for v in values if v > 90 or v < 60]
+        self.assertGreater(len(extremes), 0, "Should have some anomalies")
+
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(verbosity=2)  # Verbose for local runs
