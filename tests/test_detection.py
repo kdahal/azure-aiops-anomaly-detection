@@ -1,14 +1,16 @@
 import unittest
 import sys
+import os
 sys.path.append('../src')
-from detect_anomalies import *  # Adjust based on actual imports
 
+# Mock for detect_anomalies (adjust imports)
 class TestAnomalyDetection(unittest.TestCase):
-    def test_payload_creation(self):
-        # Simulate series creation
-        series = [{"timestamp": "2025-10-08T10:00:00Z", "value": 80}]
-        self.assertEqual(len(series), 1)
+    def test_series_payload(self):
+        # Simulate payload creation
+        from detect_anomalies import create_payload  # Assume helper func
+        payload = create_payload(10)  # e.g., 10 points
+        self.assertIn('series', payload)
+        self.assertEqual(len(payload['series']), 10)
 
 if __name__ == '__main__':
     unittest.main()
-    
