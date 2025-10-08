@@ -1,6 +1,20 @@
 import requests
 from datetime import datetime, timedelta
 import os
+# Add after imports
+from azure.monitor.query import LogsQueryClient
+from azure.identity import DefaultAzureCredential
+
+# Fetch metrics (e.g., VM CPU)
+credential = DefaultAzureCredential()
+client = LogsQueryClient(credential)
+query = "Heartbeat | where TimeGenerated > ago(1h) | summarize avg(Heartbeat) by bin(TimeGenerated, 1m)"
+response = client.query_workspace(
+    workspace_id="your-log-analytics-id",  # From IaC output
+    query=query,
+    timespan=timespan
+)
+# Process response into payload for Anomaly Detector
 
 endpoint = os.getenv("ANOMALY_DETECTOR_ENDPOINT")
 api_key = os.getenv("ANOMALY_DETECTOR_KEY")

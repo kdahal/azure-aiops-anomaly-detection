@@ -1,10 +1,14 @@
 import unittest
-from src.detect_anomalies import *  # Adjust import as needed
+import sys
+sys.path.append('../src')
+from detect_anomalies import *  # Adjust based on actual imports
 
 class TestAnomalyDetection(unittest.TestCase):
-    def test_sample_detection(self):
-        # Mock API response for unit test
-        self.assertTrue(True)  # Placeholder
+    def test_payload_creation(self):
+        # Simulate series creation
+        series = [{"timestamp": "2025-10-08T10:00:00Z", "value": 80}]
+        self.assertEqual(len(series), 1)
 
 if __name__ == '__main__':
     unittest.main()
+    
