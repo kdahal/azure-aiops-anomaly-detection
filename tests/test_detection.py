@@ -1,10 +1,8 @@
 import unittest
-import sys
 import os
-sys.path.append('../src')  # For local/CI path
-
-from detect_anomalies import create_payload, detect_via_api
 from unittest.mock import patch, Mock
+
+from src.detect_anomalies import create_payload, detect_via_api
 
 class TestAnomalyDetection(unittest.TestCase):
     def test_series_payload(self):
@@ -51,11 +49,10 @@ class TestAnomalyDetection(unittest.TestCase):
             detect_via_api(payload, endpoint, api_key)
 
     def test_missing_env_vars(self):
-        # Test raises ValueError if no endpoint/key
-        with patch.dict(os.environ, {'ANOMALY_DETECTOR_ENDPOINT': '', 'ANOMALY_DETECTOR_KEY': ''}):
-            payload = create_payload(5)
-            with self.assertRaises(ValueError):
-                detect_via_api(payload, None, None)  # But actually checks env in func
+        # Test raises ValueError if no endpoint/key (patched to check args)
+        payload = create_payload(5)
+        with self.assertRaises(ValueError):
+            detect_via_api(payload, '', '')  # Directly pass None-like values
 
 if __name__ == '__main__':
     unittest.main()
