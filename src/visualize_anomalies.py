@@ -65,8 +65,8 @@ def plot_detection(payload, result, save_path='anomaly_demo.png', show_plot=True
     plt.savefig(save_path)
     print(f"📊 Plot saved to {save_path}")
     if show_plot:
-        plt.show()
-    plt.close()  # Clean up figure
+        plt.show(block=False)  # Non-blocking show for inline/Jupyter
+    # plt.close()  # Clean up
 
 if __name__ == "__main__":
     # Demo run with synthetic data
