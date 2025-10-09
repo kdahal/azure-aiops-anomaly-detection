@@ -26,6 +26,7 @@ Launch the Jupyter notebook for step-by-step simulation (Azure stub, AWS mock, a
 [View Notebook on GitHub](examples/anomaly_demo.ipynb)
 
 ## Architecture
+```
 [Azure Resources (VMs/Apps)] --> [Azure Monitor (Metrics Ingestion)] --> [Log Analytics (Storage)]
 |
 v
@@ -34,7 +35,7 @@ v
 v
 [Alert Rules] --> [Action Groups (Email/Slack/Remediation)]
 
-
+```
 Multi-Cloud Comparison (from Notebook):
 | Cloud | Baseline | Anomaly Rate | Sample Alert |
 |-------|----------|--------------|--------------|
