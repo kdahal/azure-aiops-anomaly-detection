@@ -12,7 +12,7 @@ class TestAnomalyDetection(unittest.TestCase):
         self.assertIn('series', payload)
         self.assertEqual(len(payload['series']), 10)
         self.assertIn('granularity', payload)
-        self.assertEqual(payload['granularity'], 'PT1M')
+        self.assertEqual(payload['granularity'], 'minutely')  # Fixed: Match API enum
         # Check timestamps are recent ISOs
         first_ts = payload['series'][0]['timestamp']
         self.assertTrue(first_ts.endswith('Z') or first_ts.count('T') == 1)  # Basic ISO check
@@ -50,10 +50,10 @@ class TestAnomalyDetection(unittest.TestCase):
             detect_via_api(payload, endpoint, api_key)
 
     def test_missing_env_vars(self):
-        # Test raises ValueError if no endpoint/key (patched to check args)
+        # Test raises ValueError if no endpoint/key
         payload = create_payload(5)
         with self.assertRaises(ValueError):
-            detect_via_api(payload, '', '')  # Directly pass None-like values
+            detect_via_api(payload, '', '')
 
     def test_payload_with_anomalies(self):
         # Seed for reproducible test (ensures anomalies)
