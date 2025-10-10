@@ -3,7 +3,7 @@
 AIOps platform for proactive anomaly detection in IT operations, starting with Azure. Automatically learns normal patterns from time-series metrics (e.g., CPU, memory) and detects deviations without manual thresholds.
 
 ![Demo GIF](anomaly_demo.gif)  
-*Interactive demo of anomaly detection: Synthetic data → Detection → Alert → Plot (Azure/AWS/GCP comparison).*
+*Interactive demo loop: Data gen → Live Azure detection → Plot with anomalies → Alert (multi-cloud toggles).*
 
 ## Features
 - **Automated Learning**: Uses Azure Anomaly Detector API for ML-based detection.
@@ -17,7 +17,7 @@ AIOps platform for proactive anomaly detection in IT operations, starting with A
 3. **Visualize**: `python src/visualize_anomalies.py` (plots actual vs. expected, saves PNG).
 
 ### Interactive Demo
-Launch the Jupyter notebook for step-by-step simulation (Azure/AWS/GCP stubs, alerting):
+Launch the Jupyter notebook for step-by-step simulation (Azure/AWS/GCP stubs, live API toggle, alerting):
 - Clone: `git clone https://github.com/kdahal/azure-aiops-anomaly-detection.git`
 - Install: `pip install -r requirements.txt`
 - Run: `cd examples && jupyter notebook anomaly_demo.ipynb`
@@ -28,18 +28,18 @@ Launch the Jupyter notebook for step-by-step simulation (Azure/AWS/GCP stubs, al
 ## Architecture
 ```
 [Azure Resources (VMs/Apps)] --> [Azure Monitor (Metrics Ingestion)] --> [Log Analytics (Storage)]
-                                                                 |
-                                                                 v
+|
+v
 [Anomaly Detector API (ML Processing)] <--> [Azure Functions (Orchestration)]
-                                                                 |
-                                                                 v
+|
+v
 [Alert Rules] --> [Action Groups (Email/Slack/Remediation)]
 ```
 
 Multi-Cloud Comparison (from Notebook):
 | Cloud | Baseline | Anomaly Rate | Sample Alert |
 |-------|----------|--------------|--------------|
-| **Azure** | 75% | 10% | "9 deviations in 50 mins—scale VM!" |
+| **Azure** | 75% | 10% | "2 deviations in 50 mins—scale VM!" |
 | **AWS** | 70% | 12% | "7 bursts in 50 mins—check EC2!" |
 | **GCP** | 72% | 11% | "6 surges in 50 mins—monitor instance!" |
 
