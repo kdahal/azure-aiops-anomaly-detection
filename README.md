@@ -1,8 +1,9 @@
+
 # Azure AIOps Anomaly Detection ![Python](https://img.shields.io/badge/python-3.9%2B-blue) ![CI](https://github.com/kdahal/azure-aiops-anomaly-detection/workflows/CI%20Pipeline/badge.svg)
 
 AIOps platform for proactive anomaly detection in IT operations, starting with Azure. Automatically learns normal patterns from time-series metrics (e.g., CPU, memory) and detects deviations without manual thresholds.
 
-![Demo GIF](anomaly_demo.gif)  
+![Demo PNG](anomaly_demo.png)  
 *Interactive demo loop: Data gen → Live Azure detection → Plot with anomalies → Alert (multi-cloud toggles).*
 
 ## Features
